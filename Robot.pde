@@ -1,4 +1,4 @@
-class Robot {
+class Robot extends Enemy {
 	// Requirement #5: Complete Dinosaur Class
 
 	final int PLAYER_DETECT_RANGE_ROW = 2;
@@ -6,6 +6,35 @@ class Robot {
 	final int HAND_OFFSET_Y = 37;
 	final int HAND_OFFSET_X_FORWARD = 64;
 	final int HAND_OFFSET_X_BACKWARD = 16;
+  float currentSpeed = 1f;
+  Robot(float x, float y){
+    super(x, y);
+  }
+   void display(){
+     pushMatrix();
+      translate(x, y);
+      if (currentSpeed > 0 ) {
+        scale(1, 1);
+        image(robot, 0, 0, w, h); 
+      } else {
+        scale(-1, 1);
+        image(robot, -w, 0, w, h); 
+      }
+    popMatrix();
+       }
+       
+       void update(){
+    
+    if( -(player.y-this.y) <= PLAYER_DETECT_RANGE_ROW *80 || -(this.y-player.y) >= PLAYER_DETECT_RANGE_ROW*80){
+    x+=0;}
+    else{
+    x += currentSpeed;
+    }
+    
+        if(x+80 >= width || x<=0){
+     currentSpeed*=-1;
+    }
+  }
 
 	// HINT: Player Detection in update()
 	/*
