@@ -149,11 +149,9 @@ void initGame(){
 		float newY = SOIL_SIZE * ( i * 4 + floor(random(4)));
 
 		switch(i){
-			case 0: case 1: enemies[i] = new Soldier(newX, newY);
-break;
-			case 2: case 3: enemies[i] = new Dinosaur(newX, newY); // Requirement 4: Create new Dinosaur in row 9 - 16
-break;			
-case 4: case 5: ; // Requirement 5: Create new Robot in row 17 - 25
+			case 0: case 1: enemies[i] = new Soldier(newX, newY);break;
+			case 2: case 3: enemies[i] = new Dinosaur(newX, newY);break;
+			case 4: case 5: enemies[i] = new Robot(newX, newY);break;
 		}
 
 
@@ -167,11 +165,10 @@ case 4: case 5: ; // Requirement 5: Create new Robot in row 17 - 25
 		float newX = SOIL_SIZE * floor(random(SOIL_COL_COUNT));
 		float newY = SOIL_SIZE * ( i * 4 + floor(random(4)));
 
-		// Requirement #3:
-		// 	- Randomly decide if a cabbage or a clock should appear in a random soil every 4 rows (6 items in total)
-		// 	- Create and store cabbages/clocks in the same items array
-		// 	- You can use the above newX/newY to set their position in constructor
-  items[i]=(floor(random(2))<1)?new Cabbage(newX,newY):new Clock(newX,newY);
+    int count = floor(random(2)); 
+    if(count == 0){ items[i] = new Cabbage(newX, newY); }
+    if(count == 1){ items[i] = new Clock(newX, newY); }
+
 	}
 }
 
@@ -238,11 +235,11 @@ void draw() {
 		image(sweethome, 0, SOIL_ROW_COUNT * SOIL_SIZE);
 
 		// Items
-		// Requirement #3: Display and check collision with player for each item in Item[] items
-   for(int i = 0; i < items.length; i++){
-    items[i].display();
-    items[i].checkCollision(player);
+    for(int i=0; i<6; i++){
+      items[i].display();
+      items[i].checkCollision(player);
     }
+    
 		// Player
 
 		player.update();
